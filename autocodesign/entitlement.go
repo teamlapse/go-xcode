@@ -2,7 +2,6 @@ package autocodesign
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/bitrise-io/go-utils/log"
 	"github.com/bitrise-io/go-utils/sliceutil"
@@ -99,7 +98,8 @@ func (e Entitlement) Capability() (*appstoreconnect.BundleIDCapability, error) {
 	}
 
 	if capName, contains := capabilitiesError[capType]; contains {
-		return nil, nil //fmt.Errorf("step does not support creating an application identifier using the \"%s\" capability, please add your Application Identifier manually using the Apple Developer Portal", capName)
+		log.Warnf("This will enable the \"%s\" capability but details will have to be configured manually using the Apple Developer Portal", capName)
+		return nil, nil
 	}
 
 	return &appstoreconnect.BundleIDCapability{
